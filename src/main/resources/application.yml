@@ -1,0 +1,17 @@
+server:
+  port: 1112
+  servlet:
+    contextPath: /api
+
+spring:
+  application:
+    name: BookStoreApi
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookstore_db
+    username: user
+    password: password
