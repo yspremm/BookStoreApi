@@ -20,20 +20,35 @@ public class BookStoreService {
         this.bookStoreRepository = bookStoreRepository;
     }
 
+    public enum UserStatus {
+        PENDING, ACTIVE, INACTIVE, DELETED;
+    }
+
     public User createUser(User body){
+        body.setStatus(UserStatus.INACTIVE);
         return bookStoreRepository.save(body);
     }
 
     public boolean createLogin(User body){
         List<User> user = bookStoreRepository.findByUsername(body.getUsername());
         if (user.size() != 0 && body.getPassword().equals(user.get(0).getPassword())) {
-//            log.info(String.valueOf(user.size()));
+            user.get(0).setStatus(UserStatus.ACTIVE);
+            bookStoreRepository.save(user.get(0));
             log.info("yes");
             return true;
         } else {
             log.info("no");
             return false;
         }
+    }
+
+    public boolean deleteUser(){
+        List<User> user = bookStoreRepository.findByStatus(UserStatus.ACTIVE);
+        if (user.size() !=0) {
+            bookStoreRepository.delete(user.get(0));
+            return true;
+        }
+        return false;
     }
 
 

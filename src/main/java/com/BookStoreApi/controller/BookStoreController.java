@@ -33,4 +33,11 @@ public class BookStoreController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    @DeleteMapping(path = "/users")
+    public ResponseEntity<?> deleteUser(){
+        boolean status = bookStoreService.deleteUser();
+        return ResponseEntity.status(HttpStatus.OK).body(status);
+    }
+
+
 }

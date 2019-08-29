@@ -1,6 +1,7 @@
 package com.BookStoreApi.model;
 
 import lombok.Data;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,8 +25,7 @@ public class User {
     @Size(min = 1, max = 10, message = "Please type your date_of_birth size between 1 - 10")
     private String date_of_birth;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 8, nullable = false)
-    private String status;
+    @Column(length = 8)
+    private Enum status;
 
 }

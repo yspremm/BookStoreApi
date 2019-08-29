@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BookStoreRepository extends JpaRepository<User, Long> {
     List<User> findByUsername(String name);
+    List<User> findByStatus(Enum status);
 }
