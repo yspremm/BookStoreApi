@@ -1,8 +1,10 @@
 package com.BookStoreApi.controller;
 
 import com.BookStoreApi.api.BookStoreApi;
-import com.BookStoreApi.model.response.GetBooksInfoResponse;
+import com.BookStoreApi.model.response.GetBooksInfo;
 import com.BookStoreApi.model.response.GetListBook;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 public class BooksController {
 
     private BookStoreApi bookStoreApi;
+    private static final Logger log = LogManager.getLogger(BooksController.class.getName());
 
     @Autowired
     public BooksController(BookStoreApi bookStoreApi) {
@@ -24,9 +27,15 @@ public class BooksController {
 
     @GetMapping(path = "/books")
     public ResponseEntity<?> getBookInfo() throws Exception{
-        List<GetBooksInfoResponse> bookInfo = bookStoreApi.getBookInfo();
+        List<GetBooksInfo> bookInfo = bookStoreApi.getBookInfo();
+        List<GetBooksInfo> bookRecommend = bookStoreApi.getBookRecommend();
+        for (int i=0;i<bookRecommend.size();i++){
+            bookRecommend.get(i).setIsRecommended(true);
+            log.info(bookRecommend.get(i));
+
+        }
         GetListBook listBook = new GetListBook();
-        listBook.setBooks(bookInfo);
+        listBook.setBooks(bookRecommend);
         return ResponseEntity.ok(listBook);
     }
 

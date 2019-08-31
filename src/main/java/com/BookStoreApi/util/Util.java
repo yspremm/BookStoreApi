@@ -1,6 +1,5 @@
 package com.BookStoreApi.util;
 
-import com.BookStoreApi.model.response.GetBooksInfoResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;

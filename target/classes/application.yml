@@ -20,7 +20,7 @@ spring:
     host: https://scb-test-book-publisher.herokuapp.com
     endpoint:
       getInfo: books
-
+      getInfoRecommend: books/recommendation
 
 restTemplate:
   connectionTimeOut: 5000
