@@ -1,0 +1,14 @@
+
+[
+squid:S106)"9Replace this use of System.out or System.err by a logger.(êêÙşÿÿÿÿ8°õÅåÍ-
+V
+squid:S1064"9Replace this use of System.out or System.err by a logger.(‘ÈÏ–8°õÅåÍ-
+V
+squid:S1061"9Replace this use of System.out or System.err by a logger.(³é²8°õÅåÍ-
+V
+squid:S1067"9Replace this use of System.out or System.err by a logger.(ÃúğÚ8°õÅåÍ-
+esquid:S001125"FDefine and throw a dedicated exception instead of using a generic one.(–äò8°õÅåÍ-
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(’ĞØ‹ûÿÿÿÿ
+isquid:UselessImportCheck"9Remove this unused import 'org.springframework.ui.Model'.(ê†ıÿÿÿÿ8íßáçÍ-
+esquid:S00112""FDefine and throw a dedicated exception instead of using a generic one.(«·Üû8íœâÍ-
+esquid:S001122"FDefine and throw a dedicated exception instead of using a generic one.(ûîùå8°õÅåÍ-

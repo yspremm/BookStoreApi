@@ -1,7 +1,6 @@
 package com.BookStoreApi.model;
 
 import lombok.Data;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
