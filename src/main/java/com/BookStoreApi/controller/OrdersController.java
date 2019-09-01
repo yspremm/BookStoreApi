@@ -1,7 +1,10 @@
 package com.BookStoreApi.controller;
 
 import com.BookStoreApi.api.BookStoreApi;
+import com.BookStoreApi.constants.OrdersConstants;
+import com.BookStoreApi.exception.OrdersException;
 import com.BookStoreApi.model.Orders;
+import com.BookStoreApi.model.StatusModel;
 import com.BookStoreApi.model.response.GetBooksInfo;
 import com.BookStoreApi.model.response.GetPrice;
 import com.BookStoreApi.service.OrderService;
@@ -33,8 +36,14 @@ public class OrdersController {
 
     @RequestMapping(path = "/users/orders")
     public ResponseEntity<?> createOrders(@Valid @RequestBody Orders body) throws Exception {
-        List<GetBooksInfo> listbook = bookStoreApi.getBookInfo();
-        GetPrice price = orderService.createOrders(body, (List<GetBooksInfo>) listbook);
-        return ResponseEntity.status(HttpStatus.OK).body(price);
+        try{
+            List<GetBooksInfo> listbook = bookStoreApi.getBookInfo();
+            GetPrice price = orderService.createOrders(body, (List<GetBooksInfo>) listbook);
+            return ResponseEntity.status(HttpStatus.OK).body(price);
+        } catch (OrdersException e) {
+            OrdersConstants ordersConstants = e.getOrdersConstants();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(ordersConstants.getMessage()));
+        }
+
     }
 }

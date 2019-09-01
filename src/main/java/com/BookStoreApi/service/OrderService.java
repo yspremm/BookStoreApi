@@ -1,5 +1,9 @@
 package com.BookStoreApi.service;
 
+import com.BookStoreApi.constants.OrdersConstants;
+import com.BookStoreApi.constants.UsersConstants;
+import com.BookStoreApi.exception.OrdersException;
+import com.BookStoreApi.exception.UsersException;
 import com.BookStoreApi.model.Orders;
 import com.BookStoreApi.model.Users;
 import com.BookStoreApi.model.response.GetBooksInfo;
@@ -9,6 +13,7 @@ import com.BookStoreApi.repositories.UsersRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,19 +31,22 @@ public class OrderService {
         this.usersRepository = usersRepository;
     }
 
-    public GetPrice createOrders(Orders body, List<GetBooksInfo> listbook) {
+    public GetPrice createOrders(Orders body, List<GetBooksInfo> listbook) throws OrdersException {
         float sum=0;
         int[] OrdersBook = body.getOrders();
-
+        GetPrice price = new GetPrice();
         List<Users> user = usersRepository.findByStatus(UserService.UserStatus.ACTIVE);
         body.setUserId(user.get(0).getId());
-
         for (int i=0;i<OrdersBook.length;i++) {
-            sum += listbook.get(OrdersBook[i]-1).getPrice();
+            if (OrdersBook[i] <= listbook.size()) {
+                sum += listbook.get(OrdersBook[i]-1).getPrice();
+            }else {
+                throw new OrdersException(OrdersConstants.ORDER_NOT_FOUND, HttpStatus.BAD_REQUEST);
+            }
+
         }
         body.setPrice(sum);
         ordersRepository.save(body);
-        GetPrice price = new GetPrice();
         price.setPrice(body.getPrice());
 
         return price;

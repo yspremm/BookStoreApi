@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsersController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookStoreApi</a> &gt; <a href="index.source.html" class="el_package">com.BookStoreApi.controller</a> &gt; <span class="el_source">UsersController.java</span></div><h1>UsersController.java</h1><pre class="source lang-java linenums">package com.BookStoreApi.controller;
+
+import com.BookStoreApi.constants.UsersConstants;
+import com.BookStoreApi.exception.UsersException;
+import com.BookStoreApi.model.StatusModel;
+import com.BookStoreApi.model.Users;
+import com.BookStoreApi.model.response.GetUserInfo;
+import com.BookStoreApi.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping(path = &quot;/bookstore&quot;)
+public class UsersController {
+
+    private UserService userService;
+
+    @Autowired
+<span class="fc" id="L23">    public UsersController(UserService userService) {</span>
+<span class="fc" id="L24">        this.userService = userService;</span>
+<span class="fc" id="L25">    }</span>
+
+    @RequestMapping(path = &quot;/users&quot;)
+    public ResponseEntity&lt;?&gt; createUser(@Valid @RequestBody Users body) throws UsersException {
+        try {
+<span class="nc" id="L30">            Users user = userService.createUser(body);</span>
+<span class="nc" id="L31">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.CREATE_SUCCESS.getMessage()));</span>
+<span class="nc" id="L32">        }catch (UsersException e) {</span>
+<span class="nc" id="L33">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L34">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+        }
+    }
+
+    @RequestMapping(path = &quot;/login&quot;)
+    public ResponseEntity&lt;?&gt; requestLogin(@Valid @RequestBody Users body) throws UsersException{
+        try{
+<span class="nc" id="L41">            Users user = userService.requestLogin(body);</span>
+<span class="nc" id="L42">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.LOGIN_SUCCESS.getMessage()));</span>
+<span class="nc" id="L43">        } catch (UsersException e){</span>
+<span class="nc" id="L44">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L45">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+        }
+
+    }
+
+    @GetMapping(path = &quot;/users&quot;)
+    public ResponseEntity&lt;?&gt;  getUserInfo() throws UsersException {
+        try{
+<span class="nc" id="L53">            GetUserInfo users = userService.getUserInfo();</span>
+<span class="nc" id="L54">            return ResponseEntity.status(HttpStatus.OK).body(users);</span>
+<span class="nc" id="L55">        } catch (UsersException e) {</span>
+<span class="nc" id="L56">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L57">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+        }
+
+    }
+
+    @DeleteMapping(path = &quot;/users&quot;)
+    public ResponseEntity&lt;?&gt; deleteUser() throws UsersException {
+        try {
+<span class="nc" id="L65">            Users status = userService.deleteUser();</span>
+<span class="nc" id="L66">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.DELETE_SUCCESS.getMessage()));</span>
+<span class="nc" id="L67">        } catch (UsersException e){</span>
+<span class="nc" id="L68">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L69">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+        }
+
+    }
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

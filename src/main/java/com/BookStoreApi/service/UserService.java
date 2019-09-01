@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,8 +37,11 @@ public class UserService {
     public Users createUser(Users body) throws UsersException {
         Users usersResponse = new Users();
         List<Users> users = usersRepository.findByUsername(body.getUsername());
-        if(users.size() == 0 && body.getUsername() != null &&body.getPassword() != null) {
+        if(users.size() == 0) {
             body.setStatus(UserStatus.INACTIVE);
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            String hashedPassword = passwordEncoder.encode(body.getPassword());
+//            body.setPassword(hashedPassword);
             usersRepository.save(body);
         } else {
             throw new UsersException(UsersConstants.USER_EXIST, HttpStatus.BAD_REQUEST);
@@ -48,6 +52,12 @@ public class UserService {
     public Users requestLogin(Users body) throws UsersException {
         Users usersResponse = new Users();
         List<Users> users = usersRepository.findByUsername(body.getUsername());
+        log.info("database: "+users.get(0).getPassword());
+
+//        BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();
+//        String hashedPasswordBody = passwordFromBody.encode(body.getPassword());
+//        log.info("body: "+hashedPasswordBody);
+
         if (users.size() != 0 && body.getPassword().equals(users.get(0).getPassword())) {
             users.get(0).setStatus(UserStatus.ACTIVE);
             usersRepository.save(users.get(0));
