@@ -7,7 +7,6 @@ import com.BookStoreApi.model.Users;
 import com.BookStoreApi.model.response.GetUserInfo;
 import com.BookStoreApi.repositories.OrdersRepository;
 import com.BookStoreApi.repositories.UsersRepository;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +15,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     private UsersRepository usersRepository;
     private OrdersRepository ordersRepository;
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+//    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UsersRepository usersRepository,OrdersRepository ordersRepository) {
@@ -36,12 +36,13 @@ public class UserService {
 
     public Users createUser(Users body) throws UsersException {
         Users usersResponse = new Users();
-        List<Users> users = usersRepository.findByUsername(body.getUsername());
-        if(users.size() == 0) {
+        Optional<Users> optional = usersRepository.findByUsername(body.getUsername());
+
+        if(! optional.isPresent()) {
             body.setStatus(UserStatus.INACTIVE);
-//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//            String hashedPassword = passwordEncoder.encode(body.getPassword());
-//            body.setPassword(hashedPassword);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(body.getPassword());
+            body.setPassword(hashedPassword);
             usersRepository.save(body);
         } else {
             throw new UsersException(UsersConstants.USER_EXIST, HttpStatus.BAD_REQUEST);
@@ -51,19 +52,19 @@ public class UserService {
 
     public Users requestLogin(Users body) throws UsersException {
         Users usersResponse = new Users();
-        List<Users> users = usersRepository.findByUsername(body.getUsername());
-        log.info("database: "+users.get(0).getPassword());
+        Optional<Users> users = usersRepository.findByUsername(body.getUsername());
+//        log.info(users.get().getUsername());
 
-//        BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();
-//        String hashedPasswordBody = passwordFromBody.encode(body.getPassword());
-//        log.info("body: "+hashedPasswordBody);
+        BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();
+//        boolean booleanhashed = passwordFromBody.matches(body.getPassword(), users.get().getPassword());
+        boolean booleanhashed = false;
 
-        if (users.size() != 0 && body.getPassword().equals(users.get(0).getPassword())) {
-            users.get(0).setStatus(UserStatus.ACTIVE);
-            usersRepository.save(users.get(0));
-        } else {
-            throw new UsersException(UsersConstants.USER_OR_PASSWORD_INCORRECT, HttpStatus.BAD_REQUEST);
-        }
+//        if (users.get().getId() != null && booleanhashed) {
+//            users.get().setStatus(UserStatus.ACTIVE);
+//            usersRepository.save(users.get());
+//        } else {
+//            throw new UsersException(UsersConstants.USER_OR_PASSWORD_INCORRECT, HttpStatus.BAD_REQUEST);
+//        }
         return usersResponse;
     }
 

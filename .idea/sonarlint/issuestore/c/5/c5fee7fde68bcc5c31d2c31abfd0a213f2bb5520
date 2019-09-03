@@ -1,0 +1,5 @@
+
+Esquid:S1165"'Make this "booksConstants" field final.(•­’Ö8× ÄæÎ-
+rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Œ¹÷±
+Fsquid:S1165"#Make this "httpStatus" field final.(ı·¥ùÿÿÿÿ8¦¾ÃæÎ-
+rsquid:UselessImportCheck"GRemove this unused import 'com.BookStoreApi.constants.OrdersConstants'.(øş¡8®ÅÅæÎ-

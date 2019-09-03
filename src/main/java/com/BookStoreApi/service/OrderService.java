@@ -1,9 +1,7 @@
 package com.BookStoreApi.service;
 
 import com.BookStoreApi.constants.OrdersConstants;
-import com.BookStoreApi.constants.UsersConstants;
 import com.BookStoreApi.exception.OrdersException;
-import com.BookStoreApi.exception.UsersException;
 import com.BookStoreApi.model.Orders;
 import com.BookStoreApi.model.Users;
 import com.BookStoreApi.model.response.GetBooksInfo;
@@ -23,7 +21,7 @@ public class OrderService {
 
     private OrdersRepository ordersRepository;
     private UsersRepository usersRepository;
-    private static final Logger log = LogManager.getLogger(OrderService.class.getName());
+//    private static final Logger log = LogManager.getLogger(OrderService.class.getName());
 
     @Autowired
     public OrderService(OrdersRepository ordersRepository, UsersRepository usersRepository) {

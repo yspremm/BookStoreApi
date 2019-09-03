@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class OrdersController {
 
     private OrderService orderService;
     private BookStoreApi bookStoreApi;
-    private static final Logger log = LogManager.getLogger(OrdersController.class.getName());
+//    private static final Logger log = LogManager.getLogger(OrdersController.class.getName());
 
     @Autowired
     public OrdersController(OrderService orderService,BookStoreApi bookStoreApi) {
@@ -34,7 +35,7 @@ public class OrdersController {
         this.bookStoreApi = bookStoreApi;
     }
 
-    @RequestMapping(path = "/users/orders")
+    @PostMapping(path = "/users/orders")
     public ResponseEntity<?> createOrders(@Valid @RequestBody Orders body) throws Exception {
         try{
             List<GetBooksInfo> listbook = bookStoreApi.getBookInfo();

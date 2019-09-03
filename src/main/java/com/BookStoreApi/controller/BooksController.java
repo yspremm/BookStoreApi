@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class BooksController {
 
     private BookStoreApi bookStoreApi;
-    private static final Logger log = LogManager.getLogger(BooksController.class.getName());
+//    private static final Logger log = LogManager.getLogger(BooksController.class.getName());
 
     @Autowired
     public BooksController(BookStoreApi bookStoreApi) {

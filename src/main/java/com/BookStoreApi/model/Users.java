@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,7 +33,12 @@ public class Users {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date date_of_birth;
 
-    @Column(length = 8)
+//    @Column(length = 8)
     private Enum status;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private List<Role> roles;
+
+    private boolean active;
 
 }

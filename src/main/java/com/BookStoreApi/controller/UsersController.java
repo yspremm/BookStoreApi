@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RequestMapping(path = "/bookstore")
 public class UsersController {
 
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -24,7 +25,7 @@ public class UsersController {
         this.userService = userService;
     }
 
-    @RequestMapping(path = "/users")
+    @PostMapping(path = "/users")
     public ResponseEntity<?> createUser(@Valid @RequestBody Users body) throws UsersException {
         try {
             Users user = userService.createUser(body);
@@ -35,7 +36,7 @@ public class UsersController {
         }
     }
 
-    @RequestMapping(path = "/login")
+    @PostMapping(path = "/login")
     public ResponseEntity<?> requestLogin(@Valid @RequestBody Users body) throws UsersException{
         try{
             Users user = userService.requestLogin(body);
