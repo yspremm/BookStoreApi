@@ -1,4 +1,4 @@
-package com.bookstore.bookstore.config;
+package com.BookStoreApi.config;
 
 import com.BookStoreApi.config.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -43,12 +40,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private PasswordEncoder oauthClientPasswordEncoder;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//
+//    @Autowired
+//    private PasswordEncoder oauthClientPasswordEncoder;
+//
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Bean
     public TokenStore tokenStore() {
@@ -62,21 +59,30 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()").passwordEncoder(oauthClientPasswordEncoder);
+        PasswordEncoder passwordEncoders = new BCryptPasswordEncoder();
+        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()").passwordEncoder(passwordEncoders);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        PasswordEncoder passwordEncoders = new BCryptPasswordEncoder();
         clients
                 .inMemory()
                 .withClient("my-trusted-client")
-                .autoApprove(true)
-//                .authorizedGrantTypes("client_credentials", "implicit","refresh_token", "password", "authorization_code")
+                .authorizedGrantTypes("client_credentials", "implicit","refresh_token", "password", "authorization_code")
                 .authorities("ROLE_CLIENT","ROLE_TRUSTED_CLIENT")
                 .scopes("read","write","trust")
                 .resourceIds("oauth2-resource")
                 .accessTokenValiditySeconds(5000)
-                .secret(passwordEncoder.encode("secret"));
+                .secret(passwordEncoders.encode("secret"));
+
+//        clients.inMemory().withClient("web")
+//                .authorizedGrantTypes("client_credentials", "password")
+//                .scopes("read","write","trust")
+//                .resourceIds("oauth2-resource")
+//                .accessTokenValiditySeconds(5000)
+//                .secret(passwordEncoder.encode("secret"));
+
 
 //        clients.jdbc(dataSource).withClient("my-trusted-client")
 //                .authorizedGrantTypes("password", "refresh_token")

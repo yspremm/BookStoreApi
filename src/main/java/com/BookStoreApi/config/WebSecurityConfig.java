@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
@@ -22,17 +23,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService customUserDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         System.err.println("a");
-        System.err.println(passwordEncoder);
-//        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        System.err.println(passwordEncoder);
+        PasswordEncoder passwordEncoders = new BCryptPasswordEncoder();
         auth
                 .userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder);
+                .passwordEncoder(passwordEncoders);
     }
 
     @Override
@@ -62,9 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    PasswordEncoder getEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    PasswordEncoder getEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 }
