@@ -1,2 +1,10 @@
 
-wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¤éõþÿÿÿÿÿ
+isquid:CommentedOutCodeLine0"<This block of commented-out lines of code should be removed.(Ì‰¸„8í™µ·Ï-
+„squid:UselessImportCheck"TRemove this unnecessary import: same package classes are always implicitly imported.(¯Ö°—ûÿÿÿÿ8¿ý›·Ï-
+–squid:UselessImportCheck"fRemove this unused import 'org.springframework.security.oauth2.provider.approval.UserApprovalHandler'.(¾¬Ï¥øÿÿÿÿ8‘òâµÏ-
+isquid:CommentedOutCodeLine-"<This block of commented-out lines of code should be removed.(íëŠÍ8í™µ·Ï-
+šsquid:UselessImportCheck"jRemove this unused import 'org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso'.(õºšìþÿÿÿÿ8‘òâµÏ-
+osquid:S3305$"QInject this field value directly into "tokenStore", the only method that uses it.(â–ŠÐ8Æ¦¶Ï-
+nsquid:CommentedOutCodeLineT"<This block of commented-out lines of code should be removed.(ÿ´õÓüÿÿÿÿ8éò‘·Ï-
+~squid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¤éõþÿÿÿÿÿ8žÔ›·Ï-
+isquid:CommentedOutCodeLine\"<This block of commented-out lines of code should be removed.(Ìˆç­8Æ¦¶Ï-

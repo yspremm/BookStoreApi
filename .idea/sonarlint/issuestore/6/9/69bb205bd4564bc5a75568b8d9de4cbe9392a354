@@ -1,14 +1,17 @@
 
+Isquid:S1452!"&Remove usage of generic wildcard type.(Ê²Œıÿÿÿÿ8şºÈ¶Î-
+csquid:S4684!"@Replace this persistent entity with a simple POJO or DTO object.(Ê²Œıÿÿÿÿ8ïÓâ¨Ï-
+Vsquid:S1854#"8Remove this useless assignment to local variable "user".(Æ‰ò»8Ëâ¢ÆÎ-
+Zsquid:S1854G"<Remove this useless assignment to local variable "getToken".(’ÇĞ»8ÔãæÙÏ-
+[squid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8¯ÙÏ-
+Isquid:S14529"&Remove usage of generic wildcard type.(‰í©üÿÿÿÿ8ªˆ®ÛÏ-
+Lsquid:S1481/")Remove this unused "user" local variable.(ïæ’‹şÿÿÿÿ8ÊŞ™ÕÏ-
+csquid:S4684,"@Replace this persistent entity with a simple POJO or DTO object.(ŠÛÛºøÿÿÿÿ8ïÓâ¨Ï-
+Ksquid:S1481G"-Remove this unused "getToken" local variable.(’ÇĞ»8¡øùÙÏ-
+Isquid:S1452E"&Remove usage of generic wildcard type.(¯ËéÙüÿÿÿÿ8ÔãæÙÏ-
+Gsquid:S1481#")Remove this unused "user" local variable.(Æ‰ò»8Ëâ¢ÆÎ-
+[squid:S1854/"8Remove this useless assignment to local variable "user".(ïæ’‹şÿÿÿÿ8ÊŞ™ÕÏ-
+Isquid:S1452,"&Remove usage of generic wildcard type.(ŠÛÛºøÿÿÿÿ8üŸºÍ-
+usquid:S001179"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰í©üÿÿÿÿ8ùº®ÛÏ-
+usquid:S00117E"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯ËéÙüÿÿÿÿ8Ñ„•ÚÏ-
 qsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ï¢íQ
-Gsquid:S1481*")Remove this unused "user" local variable.(çğ½8¶ùÆÎ-
-Dsquid:S14524"&Remove usage of generic wildcard type.(«°å½8ª”‘ÁÎ-
-Vsquid:S1854*"8Remove this useless assignment to local variable "user".(çğ½8¶ùÆÎ-
-[squid:S1854"8Remove this useless assignment to local variable "user".(Ú¡†şÿÿÿÿ8Ëâ¢ÆÎ-
-Dsquid:S1452@"&Remove usage of generic wildcard type.(Ëèˆ½8²ú‰ÚÍ-
-Xsquid:S1854B":Remove this useless assignment to local variable "status".(çÃµ8²¶¸ÇÎ-
-Dsquid:S1452("&Remove usage of generic wildcard type.(Æ¡´æ8üŸºÍ-
-Isquid:S1452"&Remove usage of generic wildcard type.(Ñ¤å½ÿÿÿÿÿ8şºÈ¶Î-
-Lsquid:S1481")Remove this unused "user" local variable.(Ú¡†şÿÿÿÿ8Ëâ¢ÆÎ-
-Isquid:S1481B"+Remove this unused "status" local variable.(çÃµ8²¶¸ÇÎ-
-csquid:S4684"@Replace this persistent entity with a simple POJO or DTO object.(Ñ¤å½ÿÿÿÿÿ8¶Ó‹ˆÏ-
-^squid:S4684("@Replace this persistent entity with a simple POJO or DTO object.(Æ¡´æ8¶Ó‹ˆÏ-

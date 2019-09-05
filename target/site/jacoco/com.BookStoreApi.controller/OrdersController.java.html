@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrdersController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookStoreApi</a> &gt; <a href="index.source.html" class="el_package">com.BookStoreApi.controller</a> &gt; <span class="el_source">OrdersController.java</span></div><h1>OrdersController.java</h1><pre class="source lang-java linenums">package com.BookStoreApi.controller;
+
+import com.BookStoreApi.api.BookStoreApi;
+import com.BookStoreApi.constants.OrdersConstants;
+import com.BookStoreApi.exception.OrdersException;
+import com.BookStoreApi.model.Orders;
+import com.BookStoreApi.model.StatusModel;
+import com.BookStoreApi.model.response.GetBooksInfo;
+import com.BookStoreApi.model.response.GetPrice;
+import com.BookStoreApi.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequestMapping(path = &quot;/bookstore&quot;)
+public class OrdersController {
+
+    private OrderService orderService;
+    private BookStoreApi bookStoreApi;
+//    private static final Logger log = LogManager.getLogger(OrdersController.class.getName());
+
+    @Autowired
+<span class="fc" id="L28">    public OrdersController(OrderService orderService,BookStoreApi bookStoreApi) {</span>
+<span class="fc" id="L29">        this.orderService = orderService;</span>
+<span class="fc" id="L30">        this.bookStoreApi = bookStoreApi;</span>
+<span class="fc" id="L31">    }</span>
+//
+    @PostMapping(path = &quot;/users/orders&quot;)
+    public ResponseEntity&lt;?&gt; createOrders(@Valid @RequestBody Orders body , @RequestHeader String access_token) throws Exception {
+        try{
+<span class="nc" id="L36">            List&lt;GetBooksInfo&gt; listbook = bookStoreApi.getBookInfo();</span>
+<span class="nc" id="L37">            GetPrice price = orderService.createOrders(body, (List&lt;GetBooksInfo&gt;) listbook, access_token);</span>
+<span class="nc" id="L38">            return ResponseEntity.status(HttpStatus.OK).body(price);</span>
+<span class="nc" id="L39">        } catch (OrdersException e) {</span>
+<span class="nc" id="L40">            OrdersConstants ordersConstants = e.getOrdersConstants();</span>
+<span class="nc" id="L41">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(ordersConstants.getMessage()));</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

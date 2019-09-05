@@ -58,8 +58,6 @@ h
 d
 4src/main/java/com/BookStoreApi/model/BaseEntity.java,a/5/a527c5f3771b575827b8d7e681a51183bfde7464
 ^
-.src/main/java/com/BookStoreApi/model/User.java,d/2/d2d6cb296e35f81667ed9cf06c54082caf385cd5
-^
 .src/main/java/com/BookStoreApi/model/Role.java,e/2/e28d720683ebc7160ffd2af4fa91a5c336581109
 l
 <src/main/java/com/BookStoreApi/config/WebSecurityConfig.java,8/e/8ec806ebc7045cb10db8f718c1c064c1882ac5fb
@@ -69,3 +67,13 @@ t
 Dsrc/main/java/com/BookStoreApi/config/AuthorizationServerConfig.java,0/a/0a5484d550be56f794a345e8fe69ab5e767f3377
 t
 Dsrc/main/java/com/BookStoreApi/service/CustomUserDetailsService.java,2/4/24c5c176554118bcea381bc34340a93561e080d2
+_
+/src/main/java/com/BookStoreApi/model/Users.java,3/1/3118e5ca17568a76b79462cce81ead1695ef99fb
+d
+4src/main/java/com/BookStoreApi/model/UserDetail.java,3/f/3f8ee36c122c2f6f438bbe36be7bda9ac0a9e78f
+f
+6src/main/java/com/BookStoreApi/api/AccessTokenApi.java,c/c/cc50c2a332ebbebb6be562dde35d0214318d2804
+v
+Fsrc/main/java/com/BookStoreApi/model/response/AccessTokenResponse.java,7/1/71cd6b52ac2723cd69f473b55c6366d0e7c38b12
+k
+;src/test/java/com/BookStoreApi/service/UserServiceTest.java,0/b/0b20116a0fd13527aab9c7903543bc0a8a04217d

@@ -1,6 +1,6 @@
 
-Rsquid:S3655:"4Call "users.isPresent()" before accessing the value.(áµÓ€8›ê¯‹Ï-
-asquid:S1155T">Use isEmpty() to check whether the collection is empty or not.(†²Í±şÿÿÿÿ8›ê¯‹Ï-
-asquid:S1155H">Use isEmpty() to check whether the collection is empty or not.(†²Í±şÿÿÿÿ8›ê¯‹Ï-
-Jsquid:S1068"'Remove this unused "log" private field.(Ò•™¬ÿÿÿÿÿ8¤ÌŒÏ-
 wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(™óòñøÿÿÿÿ
+lsquid:HiddenFieldCheck-"CRename "passwordEncoder" which hides the field declared at line 37.(‡â÷‹8ûğĞÏ-
+Usquid:S2589@"7Remove this expression which always evaluates to "true"(…ÅÚ 8¤½ÅÙÏ-
+Rsquid:S3655?"4Call "users.isPresent()" before accessing the value.(áµÓ€8Ò»ÍÓÏ-
+Gsquid:S2629N"$Invoke method(s) only conditionally.(éÂø½şÿÿÿÿ8§ÕÙÚÏ-

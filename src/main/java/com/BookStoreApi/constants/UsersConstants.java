@@ -8,10 +8,10 @@ public enum UsersConstants {
     LOGIN_SUCCESS("login successfully"),
     DELETE_SUCCESS("account deleted"),
 
-    USER_EXIST("cannot create user account, username exists"),
+    USER_EXIST("cannot create user account, username already exists"),
     USER_OR_PASSWORD_INCORRECT("username or password incorrect"),
     NOT_DELETE("cannot delete"),
-    NOT_GET_USER_INFO("cannot gets information about the logged in user"),
+    NOT_GET_USER_INFO("cannot gets information, please login"),
     GET_NULL_INFO("Enter a username or password");
 
 

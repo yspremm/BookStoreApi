@@ -8,15 +8,10 @@ import com.BookStoreApi.model.StatusModel;
 import com.BookStoreApi.model.response.GetBooksInfo;
 import com.BookStoreApi.model.response.GetPrice;
 import com.BookStoreApi.service.OrderService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,12 +29,12 @@ public class OrdersController {
         this.orderService = orderService;
         this.bookStoreApi = bookStoreApi;
     }
-
+//
     @PostMapping(path = "/users/orders")
-    public ResponseEntity<?> createOrders(@Valid @RequestBody Orders body) throws Exception {
+    public ResponseEntity<?> createOrders(@Valid @RequestBody Orders body , @RequestHeader String access_token) throws Exception {
         try{
             List<GetBooksInfo> listbook = bookStoreApi.getBookInfo();
-            GetPrice price = orderService.createOrders(body, (List<GetBooksInfo>) listbook);
+            GetPrice price = orderService.createOrders(body, (List<GetBooksInfo>) listbook, access_token);
             return ResponseEntity.status(HttpStatus.OK).body(price);
         } catch (OrdersException e) {
             OrdersConstants ordersConstants = e.getOrdersConstants();

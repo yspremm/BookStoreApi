@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface UsersRepository extends JpaRepository<Users, Long> {
     Users findAllById(Long id);
     Optional<Users> findByUsername(String name);
-    List<Users> findByStatus(Enum status);
+    List<Users> findByAccessToken(String accessToken);
 }

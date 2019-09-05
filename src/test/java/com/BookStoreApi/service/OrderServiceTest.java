@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -31,12 +32,10 @@ import static org.mockito.Mockito.when;
 public class OrderServiceTest {
 
     @Mock
-    private OrdersRepository ordersRepository;
+    OrdersRepository ordersRepository;
 
     @Mock
-    private UsersRepository usersRepository;
-
-    private static final Logger log = LogManager.getLogger(OrderServiceTest.class.getName());
+    UsersRepository usersRepository;
 
     @InjectMocks
     OrderService orderService;
@@ -45,9 +44,6 @@ public class OrderServiceTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         orderService = new OrderService(ordersRepository, usersRepository);
-    }
-    public enum status {
-        ACTIVE, INACTIVE, DELETED;
     }
 
     public Orders ordersList() {
@@ -64,23 +60,22 @@ public class OrderServiceTest {
         List<Users> users = new ArrayList<>();
         Users user = new Users();
         user.setId(1L);
+        user.setAccessToken("461d24f4-5992-4817-a606-8d8eb87da5ac");
         user.setUsername("john");
         user.setPassword("thisismysecret");
         user.setFirstname("John");
         user.setLastname("Smith");
         user.setDate_of_birth(new Date(1985-01-15));
-        user.setStatus(status.ACTIVE);
         users.add(user);
 
-        user = new Users();
-        user.setId(2L);
-        user.setUsername("johndef");
-        user.setPassword("thisismysecret");
-        user.setFirstname("John");
-        user.setLastname("Smith");
-        user.setDate_of_birth(new Date(1985-01-15));
-        user.setStatus(status.ACTIVE);
-        users.add(user);
+//        user = new Users();
+//        user.setId(2L);
+//        user.setUsername("johndef");
+//        user.setPassword("thisismysecret");
+//        user.setFirstname("John");
+//        user.setLastname("Smith");
+//        user.setDate_of_birth(new Date(1985-01-15));
+//        users.add(user);
 
         return users;
     }
@@ -112,12 +107,14 @@ public class OrderServiceTest {
         List<Users> users = usersList();
         Orders orders = ordersList();
 
-        when(usersRepository.findByStatus(status.ACTIVE)).thenReturn(users);
-        assertEquals(orders.getUserId(), users.get(0).getId());
-        GetPrice resp = orderService.createOrders(ordersList(), bookList());
-        assertEquals(users.get(0), resp.getPrice());
-//        assertEquals("340.0", resp.getPrice().toString());
-
+        String token = "461d24f4-5992-4817-a606-8d8eb87da5ac";
+        when(usersRepository.findByAccessToken(token)).thenReturn(users);
+        assertEquals("1", users.get(0).getId().toString());
+        assertEquals("461d24f4-5992-4817-a606-8d8eb87da5ac", users.get(0).getAccessToken());
+        assertEquals("john", users.get(0).getUsername());
+        assertEquals("thisismysecret", users.get(0).getPassword());
+        assertEquals("John", users.get(0).getFirstname());
 
     }
+
 }

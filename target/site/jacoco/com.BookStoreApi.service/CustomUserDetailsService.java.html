@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomUserDetailsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookStoreApi</a> &gt; <a href="index.source.html" class="el_package">com.BookStoreApi.service</a> &gt; <span class="el_source">CustomUserDetailsService.java</span></div><h1>CustomUserDetailsService.java</h1><pre class="source lang-java linenums">package com.BookStoreApi.service;
+
+import java.util.stream.Collectors;
+
+import com.BookStoreApi.repositories.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+import java.util.stream.Collectors;
+/**
+ *
+ * @author developer
+ */
+@Service
+<span class="fc" id="L19">public class CustomUserDetailsService implements UserDetailsService {</span>
+
+    @Autowired
+    private UsersRepository usersRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+<span class="nc" id="L27">        UserDetails userDetail = getUserDetails(username);</span>
+<span class="nc" id="L28">        System.err.println(&quot;loadUserByUsername&quot;);</span>
+<span class="nc" id="L29">        return userDetail;</span>
+    }
+
+    public UserDetails getUserDetails(String username) {
+<span class="nc" id="L33">        return usersRepository.findByUsername(username)</span>
+<span class="nc" id="L34">                .map(u -&gt; new org.springframework.security.core.userdetails.User(</span>
+<span class="nc" id="L35">                        u.getUsername(),</span>
+<span class="nc" id="L36">                        u.getPassword(),</span>
+<span class="nc" id="L37">                        u.isActive(),</span>
+<span class="nc" id="L38">                        u.isActive(),</span>
+<span class="nc" id="L39">                        u.isActive(),</span>
+<span class="nc" id="L40">                        u.isActive(),</span>
+<span class="nc" id="L41">                        AuthorityUtils.createAuthorityList(</span>
+<span class="nc" id="L42">                                u.getRoles()</span>
+<span class="nc" id="L43">                                        .stream()</span>
+<span class="nc" id="L44">                                        .map(r -&gt; &quot;ROLE_&quot; + r.getName().toUpperCase())</span>
+<span class="nc" id="L45">                                        .collect(Collectors.toList())</span>
+<span class="nc" id="L46">                                        .toArray(new String[]{}))))</span>
+<span class="nc" id="L47">                .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;No user with &quot;</span>
+                        + &quot;the name &quot; + username + &quot;was found in the database&quot;));
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

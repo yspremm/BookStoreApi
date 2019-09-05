@@ -29,11 +29,12 @@ public class OrderService {
         this.usersRepository = usersRepository;
     }
 
-    public GetPrice createOrders(Orders body, List<GetBooksInfo> listbook) throws OrdersException {
+    public GetPrice createOrders(Orders body, List<GetBooksInfo> listbook, String getToken) throws OrdersException {
         float sum=0;
+        String token = getToken.substring(7);
         int[] OrdersBook = body.getOrders();
         GetPrice price = new GetPrice();
-        List<Users> user = usersRepository.findByStatus(UserService.UserStatus.ACTIVE);
+        List<Users> user = usersRepository.findByAccessToken(token);
         body.setUserId(user.get(0).getId());
         for (int i=0;i<OrdersBook.length;i++) {
             if (OrdersBook[i] <= listbook.size()) {

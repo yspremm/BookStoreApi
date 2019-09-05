@@ -1,4 +1,4 @@
 
-Isquid:S1452""&Remove usage of generic wildcard type.(ïôĞæÿÿÿÿÿ8û¢£áÍ-
+nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ïÈ¦‹ùÿÿÿÿ8£¢³µÏ-
 qsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ï¢íQ
-Jsquid:S1068"'Remove this unused "log" private field.(ƒœè²şÿÿÿÿ8–¦ÛÎ-
+Isquid:S1452""&Remove usage of generic wildcard type.(ïôĞæÿÿÿÿÿ8û¢£áÍ-

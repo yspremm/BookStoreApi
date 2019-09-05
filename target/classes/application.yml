@@ -9,10 +9,10 @@ spring:
 
   jpa:
     hibernate:
-#      ddl-auto: create
+      ddl-auto: create
 
   datasource:
-    url: jdbc:mysql://localhost:3306/bookstore
+    url: jdbc:mysql://localhost:3306/bookstore?useSSL=false&allowPublicKeyRetrieval=true
     username: user
     password: password
 
@@ -21,6 +21,10 @@ spring:
     endpoint:
       getInfo: books
       getInfoRecommend: books/recommendation
+
+  oauth:
+    url: http://localhost:1112/api/oauth/token?grant_type=password&username=
+
 
 restTemplate:
   connectionTimeOut: 5000

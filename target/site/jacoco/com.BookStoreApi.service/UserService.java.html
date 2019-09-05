@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookStoreApi</a> &gt; <a href="index.source.html" class="el_package">com.BookStoreApi.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.BookStoreApi.service;
+
+import com.BookStoreApi.constants.UsersConstants;
+import com.BookStoreApi.exception.UsersException;
+import com.BookStoreApi.model.Orders;
+import com.BookStoreApi.model.Role;
+import com.BookStoreApi.model.Users;
+import com.BookStoreApi.model.response.AccessTokenResponse;
+import com.BookStoreApi.model.response.GetUserInfo;
+import com.BookStoreApi.repositories.OrdersRepository;
+import com.BookStoreApi.repositories.UsersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    private UsersRepository usersRepository;
+    private OrdersRepository ordersRepository;
+<span class="fc" id="L29">    private static final Logger log = LoggerFactory.getLogger(UserService.class);</span>
+
+    @Autowired
+<span class="fc" id="L32">    public UserService(UsersRepository usersRepository,OrdersRepository ordersRepository) {</span>
+<span class="fc" id="L33">        this.usersRepository = usersRepository;</span>
+<span class="fc" id="L34">        this.ordersRepository = ordersRepository;</span>
+<span class="fc" id="L35">    }</span>
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Users createUser(Users body) throws UsersException {
+<span class="fc" id="L41">        Users usersResponse = new Users();</span>
+<span class="fc" id="L42">        Optional&lt;Users&gt; optional = usersRepository.findByUsername(body.getUsername());</span>
+
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if(! optional.isPresent()) {</span>
+<span class="fc" id="L45">            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L46">            String hashedPassword = passwordEncoder.encode(body.getPassword());</span>
+<span class="fc" id="L47">            body.setPassword(hashedPassword);</span>
+
+<span class="fc" id="L49">            body.setRoles(Arrays.asList(new Role(&quot;USER&quot;), new Role(&quot;ACTUATOR&quot;)));</span>
+<span class="fc" id="L50">            body.setActive(true);</span>
+
+<span class="fc" id="L52">            usersRepository.save(body);</span>
+<span class="fc" id="L53">        } else {</span>
+<span class="nc" id="L54">            throw new UsersException(UsersConstants.USER_EXIST, HttpStatus.BAD_REQUEST);</span>
+        }
+<span class="fc" id="L56">        return usersResponse;</span>
+    }
+
+    public Users requestLogin(Users body, AccessTokenResponse token) throws UsersException {
+<span class="nc" id="L60">        Users usersResponse = new Users();</span>
+<span class="nc" id="L61">        Optional&lt;Users&gt; users = usersRepository.findByUsername(body.getUsername());</span>
+<span class="nc" id="L62">        BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();</span>
+<span class="nc" id="L63">        boolean booleanhashed = passwordFromBody.matches(body.getPassword(), users.get().getPassword());</span>
+<span class="nc bnc" id="L64" title="All 4 branches missed.">        if (users.isPresent() &amp;&amp; booleanhashed) {</span>
+<span class="nc" id="L65">            users.get().setAccessToken(token.getAccess_token());</span>
+<span class="nc" id="L66">            usersRepository.save(users.get());</span>
+        } else {
+<span class="nc" id="L68">            throw new UsersException(UsersConstants.USER_OR_PASSWORD_INCORRECT, HttpStatus.BAD_REQUEST);</span>
+        }
+<span class="nc" id="L70">        return usersResponse;</span>
+
+    }
+
+    public Users deleteUser(String getToken) throws UsersException {
+<span class="nc" id="L75">        Users usersResponse = new Users();</span>
+<span class="nc" id="L76">        String token = getToken.substring(7);</span>
+<span class="nc" id="L77">        List&lt;Users&gt; user = usersRepository.findByAccessToken(token);</span>
+<span class="nc" id="L78">        log.info(user.toString());</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (user.get(0).getId() != null) {</span>
+<span class="nc" id="L80">            usersRepository.delete(user.get(0));</span>
+        } else {
+<span class="nc" id="L82">            throw new UsersException(UsersConstants.NOT_DELETE, HttpStatus.BAD_REQUEST);</span>
+        }
+<span class="nc" id="L84">        return usersResponse;</span>
+    }
+
+    public GetUserInfo getUserInfo(String getToken) throws UsersException {
+<span class="nc" id="L88">        String token = getToken.substring(7);</span>
+<span class="nc" id="L89">        GetUserInfo getUserInfo = new GetUserInfo();</span>
+<span class="nc" id="L90">        List&lt;Users&gt; user = usersRepository.findByAccessToken(token);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (!user.isEmpty()) {</span>
+<span class="nc" id="L92">            Orders order = ordersRepository.findByUserId(user.get(0).getId());</span>
+<span class="nc" id="L93">                getUserInfo.setFirstname(user.get(0).getFirstname());</span>
+<span class="nc" id="L94">                getUserInfo.setLastname(user.get(0).getLastname());</span>
+<span class="nc" id="L95">                getUserInfo.setDate_of_birth(user.get(0).getDate_of_birth());</span>
+<span class="nc" id="L96">                getUserInfo.setOrders(order.getOrders());</span>
+<span class="nc" id="L97">            } else {</span>
+<span class="nc" id="L98">                throw new UsersException(UsersConstants.NOT_GET_USER_INFO, HttpStatus.BAD_REQUEST);</span>
+            }
+
+<span class="nc" id="L101">        return getUserInfo;</span>
+    }
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
