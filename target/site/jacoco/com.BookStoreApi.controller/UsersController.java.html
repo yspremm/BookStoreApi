@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = &quot;/bookstore&quot;)
@@ -24,31 +23,31 @@ public class UsersController {
     private AccessTokenApi accessTokenApi;
 
     @Autowired
-<span class="fc" id="L27">    public UsersController(UserService userService,AccessTokenApi accessTokenApi) {</span>
-<span class="fc" id="L28">        this.userService = userService;</span>
-<span class="fc" id="L29">        this.accessTokenApi = accessTokenApi;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L26">    public UsersController(UserService userService,AccessTokenApi accessTokenApi) {</span>
+<span class="fc" id="L27">        this.userService = userService;</span>
+<span class="fc" id="L28">        this.accessTokenApi = accessTokenApi;</span>
+<span class="fc" id="L29">    }</span>
 
     @PostMapping(path = &quot;/users&quot;)
     public ResponseEntity&lt;?&gt; createUser(@Valid @RequestBody Users body) throws UsersException {
         try {
-<span class="nc" id="L35">            Users user = userService.createUser(body);</span>
-<span class="nc" id="L36">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.CREATE_SUCCESS.getMessage()));</span>
-<span class="nc" id="L37">        }catch (UsersException e) {</span>
-<span class="nc" id="L38">            UsersConstants usersConstants = e.getUsersConstants();</span>
-<span class="nc" id="L39">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+<span class="nc" id="L34">            userService.createUser(body);</span>
+<span class="nc" id="L35">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.CREATE_SUCCESS.getMessage()));</span>
+<span class="nc" id="L36">        }catch (UsersException e) {</span>
+<span class="nc" id="L37">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L38">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
         }
     }
 
     @PostMapping(path = &quot;/login&quot;)
     public ResponseEntity&lt;?&gt; requestLogin(@Valid @RequestBody Users body) throws Exception {
         try{
-<span class="nc" id="L46">            AccessTokenResponse token = accessTokenApi.getAccessToken(body.getUsername(), body.getPassword());</span>
-<span class="nc" id="L47">            Users user = userService.requestLogin(body, token);</span>
-<span class="nc" id="L48">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.LOGIN_SUCCESS.getMessage()));</span>
-<span class="nc" id="L49">        } catch (UsersException e){</span>
-<span class="nc" id="L50">            UsersConstants usersConstants = e.getUsersConstants();</span>
-<span class="nc" id="L51">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+<span class="nc" id="L45">            AccessTokenResponse token = accessTokenApi.getAccessToken(body.getUsername(), body.getPassword());</span>
+<span class="nc" id="L46">            userService.requestLogin(body, token);</span>
+<span class="nc" id="L47">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.LOGIN_SUCCESS.getMessage()));</span>
+<span class="nc" id="L48">        } catch (UsersException e){</span>
+<span class="nc" id="L49">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L50">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
         }
 
     }
@@ -56,11 +55,11 @@ public class UsersController {
     @GetMapping(path = &quot;/users&quot;)
     public ResponseEntity&lt;?&gt;  getUserInfo(@RequestHeader String access_token) throws UsersException {
         try{
-<span class="nc" id="L59">            GetUserInfo users = userService.getUserInfo(access_token);</span>
-<span class="nc" id="L60">            return ResponseEntity.status(HttpStatus.OK).body(users);</span>
-<span class="nc" id="L61">        } catch (UsersException e) {</span>
-<span class="nc" id="L62">            UsersConstants usersConstants = e.getUsersConstants();</span>
-<span class="nc" id="L63">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+<span class="nc" id="L58">            GetUserInfo users = userService.getUserInfo(access_token);</span>
+<span class="nc" id="L59">            return ResponseEntity.status(HttpStatus.OK).body(users);</span>
+<span class="nc" id="L60">        } catch (UsersException e) {</span>
+<span class="nc" id="L61">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L62">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
         }
 
     }
@@ -68,11 +67,11 @@ public class UsersController {
     @DeleteMapping(path = &quot;/users&quot;)
     public ResponseEntity&lt;?&gt; deleteUser(@RequestHeader String access_token) throws UsersException {
         try {
-<span class="nc" id="L71">            Users getToken = userService.deleteUser(access_token);</span>
-<span class="nc" id="L72">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.DELETE_SUCCESS.getMessage()));</span>
-<span class="nc" id="L73">        } catch (UsersException e){</span>
-<span class="nc" id="L74">            UsersConstants usersConstants = e.getUsersConstants();</span>
-<span class="nc" id="L75">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
+<span class="nc" id="L70">            userService.deleteUser(access_token);</span>
+<span class="nc" id="L71">            return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.DELETE_SUCCESS.getMessage()));</span>
+<span class="nc" id="L72">        } catch (UsersException e){</span>
+<span class="nc" id="L73">            UsersConstants usersConstants = e.getUsersConstants();</span>
+<span class="nc" id="L74">            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StatusModel(usersConstants.getMessage()));</span>
         }
 
     }

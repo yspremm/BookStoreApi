@@ -37,68 +37,62 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Users createUser(Users body) throws UsersException {
-<span class="fc" id="L41">        Users usersResponse = new Users();</span>
-<span class="fc" id="L42">        Optional&lt;Users&gt; optional = usersRepository.findByUsername(body.getUsername());</span>
+    public void createUser(Users body) throws UsersException {
+<span class="fc" id="L41">        Optional&lt;Users&gt; optional = usersRepository.findByUsername(body.getUsername());</span>
 
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if(! optional.isPresent()) {</span>
-<span class="fc" id="L45">            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span>
-<span class="fc" id="L46">            String hashedPassword = passwordEncoder.encode(body.getPassword());</span>
-<span class="fc" id="L47">            body.setPassword(hashedPassword);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if(! optional.isPresent()) {</span>
+<span class="fc" id="L44">            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L45">            String hashedPassword = passwordEncoder.encode(body.getPassword());</span>
+<span class="fc" id="L46">            body.setPassword(hashedPassword);</span>
 
-<span class="fc" id="L49">            body.setRoles(Arrays.asList(new Role(&quot;USER&quot;), new Role(&quot;ACTUATOR&quot;)));</span>
-<span class="fc" id="L50">            body.setActive(true);</span>
+<span class="fc" id="L48">            body.setRoles(Arrays.asList(new Role(&quot;USER&quot;), new Role(&quot;ACTUATOR&quot;)));</span>
+<span class="fc" id="L49">            body.setActive(true);</span>
 
-<span class="fc" id="L52">            usersRepository.save(body);</span>
-<span class="fc" id="L53">        } else {</span>
-<span class="nc" id="L54">            throw new UsersException(UsersConstants.USER_EXIST, HttpStatus.BAD_REQUEST);</span>
+<span class="fc" id="L51">            usersRepository.save(body);</span>
+<span class="fc" id="L52">        } else {</span>
+<span class="fc" id="L53">            throw new UsersException(UsersConstants.USER_EXIST, HttpStatus.BAD_REQUEST);</span>
         }
-<span class="fc" id="L56">        return usersResponse;</span>
-    }
+<span class="fc" id="L55">    }</span>
 
-    public Users requestLogin(Users body, AccessTokenResponse token) throws UsersException {
-<span class="nc" id="L60">        Users usersResponse = new Users();</span>
-<span class="nc" id="L61">        Optional&lt;Users&gt; users = usersRepository.findByUsername(body.getUsername());</span>
-<span class="nc" id="L62">        BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();</span>
-<span class="nc" id="L63">        boolean booleanhashed = passwordFromBody.matches(body.getPassword(), users.get().getPassword());</span>
-<span class="nc bnc" id="L64" title="All 4 branches missed.">        if (users.isPresent() &amp;&amp; booleanhashed) {</span>
-<span class="nc" id="L65">            users.get().setAccessToken(token.getAccess_token());</span>
-<span class="nc" id="L66">            usersRepository.save(users.get());</span>
+    public void requestLogin(Users body, AccessTokenResponse token) throws UsersException {
+<span class="fc" id="L58">        Optional&lt;Users&gt; users = usersRepository.findByUsername(body.getUsername());</span>
+<span class="fc" id="L59">        BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L60">        boolean booleanhashed = passwordFromBody.matches(body.getPassword(), users.get().getPassword());</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">        if (users.isPresent() &amp;&amp; booleanhashed) {</span>
+<span class="fc" id="L62">            users.get().setAccessToken(token.getAccess_token());</span>
+<span class="fc" id="L63">            usersRepository.save(users.get());</span>
         } else {
-<span class="nc" id="L68">            throw new UsersException(UsersConstants.USER_OR_PASSWORD_INCORRECT, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L65">            throw new UsersException(UsersConstants.USER_OR_PASSWORD_INCORRECT, HttpStatus.BAD_REQUEST);</span>
         }
-<span class="nc" id="L70">        return usersResponse;</span>
+<span class="fc" id="L67">    }</span>
 
-    }
-
-    public Users deleteUser(String getToken) throws UsersException {
-<span class="nc" id="L75">        Users usersResponse = new Users();</span>
-<span class="nc" id="L76">        String token = getToken.substring(7);</span>
-<span class="nc" id="L77">        List&lt;Users&gt; user = usersRepository.findByAccessToken(token);</span>
-<span class="nc" id="L78">        log.info(user.toString());</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (user.get(0).getId() != null) {</span>
-<span class="nc" id="L80">            usersRepository.delete(user.get(0));</span>
+    public void deleteUser(String getToken) throws UsersException {
+<span class="nc" id="L70">        Users usersResponse = new Users();</span>
+<span class="nc" id="L71">        String token = getToken.substring(7);</span>
+<span class="nc" id="L72">        List&lt;Users&gt; user = usersRepository.findByAccessToken(token);</span>
+<span class="nc" id="L73">        log.info(user.toString());</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (user.get(0).getId() != null) {</span>
+<span class="nc" id="L75">            usersRepository.delete(user.get(0));</span>
         } else {
-<span class="nc" id="L82">            throw new UsersException(UsersConstants.NOT_DELETE, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L77">            throw new UsersException(UsersConstants.NOT_DELETE, HttpStatus.BAD_REQUEST);</span>
         }
-<span class="nc" id="L84">        return usersResponse;</span>
-    }
+<span class="nc" id="L79">    }</span>
 
     public GetUserInfo getUserInfo(String getToken) throws UsersException {
-<span class="nc" id="L88">        String token = getToken.substring(7);</span>
-<span class="nc" id="L89">        GetUserInfo getUserInfo = new GetUserInfo();</span>
-<span class="nc" id="L90">        List&lt;Users&gt; user = usersRepository.findByAccessToken(token);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (!user.isEmpty()) {</span>
-<span class="nc" id="L92">            Orders order = ordersRepository.findByUserId(user.get(0).getId());</span>
-<span class="nc" id="L93">                getUserInfo.setFirstname(user.get(0).getFirstname());</span>
-<span class="nc" id="L94">                getUserInfo.setLastname(user.get(0).getLastname());</span>
-<span class="nc" id="L95">                getUserInfo.setDate_of_birth(user.get(0).getDate_of_birth());</span>
-<span class="nc" id="L96">                getUserInfo.setOrders(order.getOrders());</span>
-<span class="nc" id="L97">            } else {</span>
-<span class="nc" id="L98">                throw new UsersException(UsersConstants.NOT_GET_USER_INFO, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L82">        String token = getToken.substring(7);</span>
+<span class="nc" id="L83">        GetUserInfo getUserInfo = new GetUserInfo();</span>
+<span class="nc" id="L84">        List&lt;Users&gt; user = usersRepository.findByAccessToken(token);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (!user.isEmpty()) {</span>
+<span class="nc" id="L86">            Orders order = ordersRepository.findByUserId(user.get(0).getId());</span>
+<span class="nc" id="L87">                getUserInfo.setFirstname(user.get(0).getFirstname());</span>
+<span class="nc" id="L88">                getUserInfo.setLastname(user.get(0).getLastname());</span>
+<span class="nc" id="L89">                getUserInfo.setDate_of_birth(user.get(0).getDate_of_birth());</span>
+<span class="nc" id="L90">                getUserInfo.setOrders(order.getOrders());</span>
+<span class="nc" id="L91">            } else {</span>
+<span class="nc" id="L92">                throw new UsersException(UsersConstants.NOT_GET_USER_INFO, HttpStatus.BAD_REQUEST);</span>
             }
 
-<span class="nc" id="L101">        return getUserInfo;</span>
+<span class="nc" id="L95">        return getUserInfo;</span>
     }
 
 

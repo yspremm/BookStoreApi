@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/bookstore")
@@ -32,7 +31,7 @@ public class UsersController {
     @PostMapping(path = "/users")
     public ResponseEntity<?> createUser(@Valid @RequestBody Users body) throws UsersException {
         try {
-            Users user = userService.createUser(body);
+            userService.createUser(body);
             return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.CREATE_SUCCESS.getMessage()));
         }catch (UsersException e) {
             UsersConstants usersConstants = e.getUsersConstants();
@@ -44,7 +43,7 @@ public class UsersController {
     public ResponseEntity<?> requestLogin(@Valid @RequestBody Users body) throws Exception {
         try{
             AccessTokenResponse token = accessTokenApi.getAccessToken(body.getUsername(), body.getPassword());
-            Users user = userService.requestLogin(body, token);
+            userService.requestLogin(body, token);
             return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.LOGIN_SUCCESS.getMessage()));
         } catch (UsersException e){
             UsersConstants usersConstants = e.getUsersConstants();
@@ -68,7 +67,7 @@ public class UsersController {
     @DeleteMapping(path = "/users")
     public ResponseEntity<?> deleteUser(@RequestHeader String access_token) throws UsersException {
         try {
-            Users getToken = userService.deleteUser(access_token);
+            userService.deleteUser(access_token);
             return ResponseEntity.status(HttpStatus.OK).body(new StatusModel(UsersConstants.DELETE_SUCCESS.getMessage()));
         } catch (UsersException e){
             UsersConstants usersConstants = e.getUsersConstants();

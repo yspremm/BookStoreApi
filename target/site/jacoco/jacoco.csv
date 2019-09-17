@@ -1,8 +1,8 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 BookStoreApi,com.BookStoreApi.controller,BooksController,69,6,4,0,13,3,3,1,1,1
 BookStoreApi,com.BookStoreApi.controller,OrdersController,29,9,0,0,6,4,1,1,1,1
-BookStoreApi,com.BookStoreApi.controller,UsersController,113,9,0,0,21,4,4,1,4,1
-BookStoreApi,com.BookStoreApi.service,UserService,152,68,9,1,30,16,8,3,3,3
+BookStoreApi,com.BookStoreApi.controller,UsersController,110,9,0,0,21,4,4,1,4,1
+BookStoreApi,com.BookStoreApi.service,UserService,102,107,6,4,21,23,6,5,2,4
 BookStoreApi,com.BookStoreApi.service,OrderService,74,9,4,0,14,4,3,1,1,1
 BookStoreApi,com.BookStoreApi.service,CustomUserDetailsService,74,3,0,0,18,1,5,1,5,1
 BookStoreApi,com.BookStoreApi.util,Util,16,10,0,0,3,2,3,2,3,2

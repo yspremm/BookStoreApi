@@ -37,8 +37,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Users createUser(Users body) throws UsersException {
-        Users usersResponse = new Users();
+    public void createUser(Users body) throws UsersException {
         Optional<Users> optional = usersRepository.findByUsername(body.getUsername());
 
         if(! optional.isPresent()) {
@@ -53,11 +52,9 @@ public class UserService {
         } else {
             throw new UsersException(UsersConstants.USER_EXIST, HttpStatus.BAD_REQUEST);
         }
-        return usersResponse;
     }
 
-    public Users requestLogin(Users body, AccessTokenResponse token) throws UsersException {
-        Users usersResponse = new Users();
+    public void requestLogin(Users body, AccessTokenResponse token) throws UsersException {
         Optional<Users> users = usersRepository.findByUsername(body.getUsername());
         BCryptPasswordEncoder passwordFromBody = new BCryptPasswordEncoder();
         boolean booleanhashed = passwordFromBody.matches(body.getPassword(), users.get().getPassword());
@@ -67,11 +64,9 @@ public class UserService {
         } else {
             throw new UsersException(UsersConstants.USER_OR_PASSWORD_INCORRECT, HttpStatus.BAD_REQUEST);
         }
-        return usersResponse;
-
     }
 
-    public Users deleteUser(String getToken) throws UsersException {
+    public void deleteUser(String getToken) throws UsersException {
         Users usersResponse = new Users();
         String token = getToken.substring(7);
         List<Users> user = usersRepository.findByAccessToken(token);
@@ -81,7 +76,6 @@ public class UserService {
         } else {
             throw new UsersException(UsersConstants.NOT_DELETE, HttpStatus.BAD_REQUEST);
         }
-        return usersResponse;
     }
 
     public GetUserInfo getUserInfo(String getToken) throws UsersException {
